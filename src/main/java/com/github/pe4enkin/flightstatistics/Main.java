@@ -6,6 +6,7 @@ import com.github.pe4enkin.flightstatistics.util.JsonReader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
@@ -31,5 +32,11 @@ public class Main {
                     String flightTime = entry.getValue().toHours() + "ч. " + entry.getValue().toMinutesPart() + "м.";
                     System.out.printf("%-10s %-15s %-15s %-10s\n", entry.getKey(), "Владивосток", "Тель-Авив", flightTime);
                 });
+
+        BigDecimal averagePrice = TicketService.calculateAveragePrice(tickets, "VVO", "TLV");
+        BigDecimal meadianPrice = TicketService.calculateMedianPrice(tickets, "VVO", "TLV");
+        System.out.printf("\n%-15s %s\n","Средняя цена:", averagePrice);
+        System.out.printf("%-15s %s\n", "Медианная цена:", meadianPrice);
+        System.out.printf("%-15s %s\n", "Разница цен:", averagePrice.subtract(meadianPrice));
     }
 }
